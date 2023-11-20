@@ -9,6 +9,7 @@ import UIKit
 
 class NewsTableViewController: UITableViewController {
   
+  var newsData: NewsData?
   private var articles = [Article]()
   private var newsManager = NewsManager()
   
@@ -50,7 +51,11 @@ class NewsTableViewController: UITableViewController {
       fatalError("Unable to dequeue NewsTableViewCell")
     }
     let article = articles[indexPath.row]
-    cell.configure(with: article)
+    
+    if let newsData = newsData {
+      cell.configure(with: article, newsData: newsData)
+    }
+    
     return cell
   }
   

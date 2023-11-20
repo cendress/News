@@ -11,6 +11,7 @@ class NewsTableViewCell: UITableViewCell {
   
   let titleLabel = UILabel()
   let newsImageView = UIImageView()
+  let subtitleLabel = UILabel()
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -23,36 +24,51 @@ class NewsTableViewCell: UITableViewCell {
   }
   
   private func setupCell() {
-    titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+    titleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     titleLabel.numberOfLines = 0
+    
+    subtitleLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    subtitleLabel.numberOfLines = 0
+    subtitleLabel.textColor = .darkGray
+    
     newsImageView.contentMode = .scaleAspectFill
     newsImageView.clipsToBounds = true
+    newsImageView.layer.cornerRadius = 8
+    
+    contentView.addSubview(titleLabel)
+    contentView.addSubview(subtitleLabel)
+    contentView.addSubview(newsImageView)
+    
+    accessoryType = .disclosureIndicator 
   }
   
   private func layoutCell() {
-    contentView.addSubview(titleLabel)
-    contentView.addSubview(newsImageView)
-    
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     newsImageView.translatesAutoresizingMaskIntoConstraints = false
+    subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
+    
+    let padding: CGFloat = 10
     
     NSLayoutConstraint.activate([
-      newsImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-      newsImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-      newsImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-      newsImageView.heightAnchor.constraint(equalToConstant: 200)
-    ])
-    
-    NSLayoutConstraint.activate([
-      titleLabel.topAnchor.constraint(equalTo: newsImageView.bottomAnchor, constant: 10),
-      titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-      titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-      titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10)
+      newsImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: padding),
+      newsImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
+      newsImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
+      newsImageView.heightAnchor.constraint(equalToConstant: 200),
+      
+      titleLabel.topAnchor.constraint(equalTo: newsImageView.bottomAnchor, constant: padding),
+      titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
+      titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
+      
+      subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: padding),
+      subtitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
+      subtitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
+      subtitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -padding)
     ])
   }
   
-  func configure(with article: Article) {
+  func configure(with article: Article, newsData: NewsData) {
     titleLabel.text = article.title
+    subtitleLabel.text = newsData.name
     loadImage(from: article.urlToImage)
   }
   
@@ -75,5 +91,6 @@ class NewsTableViewCell: UITableViewCell {
     }.resume()
   }
 }
+
 
 
