@@ -9,50 +9,50 @@ import UIKit
 
 class NewsTableViewController: UITableViewController {
   
-  // MARK: - Properties
-  
   private var articles = [Article]()
   private var newsManager = NewsManager()
   
-  // MARK: - View Lifecycle
-  
   override func viewDidLoad() {
     super.viewDidLoad()
-    newsManager.delegate = self
-    newsManager.fetchTopHeadlines()
     setupTableView()
+    setupRefreshControl()
+    fetchNews()
+    
+    tableView.dataSource = self
+    newsManager.delegate = self
   }
-  
-  // MARK: - Helper Methods
   
   private func setupTableView() {
-    tableView.register(UITableViewCell.self, forCellReuseIdentifier: "NewsCell")
+    tableView.register(NewsTableViewCell.self, forCellReuseIdentifier: "NewsCell")
     tableView.rowHeight = UITableView.automaticDimension
-    tableView.estimatedRowHeight = 100
+    tableView.estimatedRowHeight = 140
+    tableView.separatorStyle = .none
   }
   
-  // MARK: - UITableViewDataSource
+  private func setupRefreshControl() {
+    refreshControl?.addTarget(self, action: #selector(refreshNewsData(_:)), for: .valueChanged)
+  }
+  
+  @objc private func refreshNewsData(_ sender: Any) {
+    fetchNews()
+  }
+  
+  private func fetchNews() {
+    newsManager.fetchTopHeadlines()
+  }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return articles.count
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath)
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath) as? NewsTableViewCell else {
+      fatalError("Unable to dequeue NewsTableViewCell")
+    }
     let article = articles[indexPath.row]
-    cell.textLabel?.text = article.title
-    cell.textLabel?.numberOfLines = 0
-    cell.textLabel?.lineBreakMode = .byWordWrapping
-    cell.textLabel?.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-    cell.clipsToBounds = true
-    
-    cell.accessoryType = .disclosureIndicator
-    
+    cell.configure(with: article)
     return cell
   }
-  
-  
-  // MARK: - UITableViewDelegate
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
@@ -62,8 +62,6 @@ class NewsTableViewController: UITableViewController {
     }
   }
   
-  // MARK: - Navigation
-  
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "goToArticle", let articleURL = sender as? String {
       let destination = segue.destination as! ArticleWebViewController
@@ -72,19 +70,23 @@ class NewsTableViewController: UITableViewController {
   }
 }
 
-// MARK: - NewsManagerDelegate
-
 extension NewsTableViewController: NewsManagerDelegate {
   
   func didFetchArticles(_ articles: [Article]) {
-    DispatchQueue.main.async { [weak self] in
-      self?.articles = articles
-      self?.tableView.reloadData()
+    DispatchQueue.main.async {
+      self.articles = articles
+      self.tableView.reloadData()
+      self.refreshControl?.endRefreshing()
     }
   }
   
   func didFailWithError(_ error: Error) {
-    print(error)
+    DispatchQueue.main.async {
+      print(error)
+      self.refreshControl?.endRefreshing()
+    }
   }
 }
+
+
 
