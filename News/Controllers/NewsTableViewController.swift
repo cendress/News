@@ -8,13 +8,14 @@
 import UIKit
 
 class NewsTableViewController: UITableViewController {
-  
-  var newsData: NewsData?
+
   private var articles = [Article]()
   private var newsManager = NewsManager()
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: nil)
+    
     setupTableView()
     setupRefreshControl()
     fetchNews()
@@ -51,11 +52,7 @@ class NewsTableViewController: UITableViewController {
       fatalError("Unable to dequeue NewsTableViewCell")
     }
     let article = articles[indexPath.row]
-    
-    if let newsData = newsData {
-      cell.configure(with: article, newsData: newsData)
-    }
-    
+    cell.configure(with: article)
     return cell
   }
   

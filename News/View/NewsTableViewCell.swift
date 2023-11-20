@@ -11,7 +11,6 @@ class NewsTableViewCell: UITableViewCell {
   
   let titleLabel = UILabel()
   let newsImageView = UIImageView()
-  let subtitleLabel = UILabel()
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -27,25 +26,17 @@ class NewsTableViewCell: UITableViewCell {
     titleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     titleLabel.numberOfLines = 0
     
-    subtitleLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
-    subtitleLabel.numberOfLines = 0
-    subtitleLabel.textColor = .darkGray
-    
     newsImageView.contentMode = .scaleAspectFill
     newsImageView.clipsToBounds = true
     newsImageView.layer.cornerRadius = 8
     
     contentView.addSubview(titleLabel)
-    contentView.addSubview(subtitleLabel)
     contentView.addSubview(newsImageView)
-    
-    accessoryType = .disclosureIndicator 
   }
   
   private func layoutCell() {
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     newsImageView.translatesAutoresizingMaskIntoConstraints = false
-    subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
     
     let padding: CGFloat = 10
     
@@ -58,17 +49,12 @@ class NewsTableViewCell: UITableViewCell {
       titleLabel.topAnchor.constraint(equalTo: newsImageView.bottomAnchor, constant: padding),
       titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
       titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
-      
-      subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: padding),
-      subtitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
-      subtitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
-      subtitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -padding)
+      titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -padding)
     ])
   }
   
-  func configure(with article: Article, newsData: NewsData) {
+  func configure(with article: Article) {
     titleLabel.text = article.title
-    subtitleLabel.text = newsData.name
     loadImage(from: article.urlToImage)
   }
   
