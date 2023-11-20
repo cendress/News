@@ -17,6 +17,7 @@
 		9D96B5E52AB8E283002AC628 /* NewsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D96B5E42AB8E283002AC628 /* NewsManager.swift */; };
 		9D96B5EB2AB8E385002AC628 /* NewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D96B5EA2AB8E385002AC628 /* NewsTableViewController.swift */; };
 		9D96B5ED2AB8E3E8002AC628 /* ArticleWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D96B5EC2AB8E3E8002AC628 /* ArticleWebViewController.swift */; };
+		9DAED7112B0BD5B500C4C09F /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAED7102B0BD5B500C4C09F /* NewsTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		9D96B5E42AB8E283002AC628 /* NewsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsManager.swift; sourceTree = "<group>"; };
 		9D96B5EA2AB8E385002AC628 /* NewsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewController.swift; sourceTree = "<group>"; };
 		9D96B5EC2AB8E3E8002AC628 /* ArticleWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleWebViewController.swift; sourceTree = "<group>"; };
+		9DAED7102B0BD5B500C4C09F /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				9D96B5D22AB8E0B4002AC628 /* Main.storyboard */,
+				9DAED7102B0BD5B500C4C09F /* NewsTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -184,6 +187,7 @@
 			files = (
 				9D96B5E12AB8E1F0002AC628 /* Keys.swift in Sources */,
 				9D96B5CD2AB8E0B4002AC628 /* AppDelegate.swift in Sources */,
+				9DAED7112B0BD5B500C4C09F /* NewsTableViewCell.swift in Sources */,
 				9D96B5EB2AB8E385002AC628 /* NewsTableViewController.swift in Sources */,
 				9D96B5CF2AB8E0B4002AC628 /* SceneDelegate.swift in Sources */,
 				9D96B5E52AB8E283002AC628 /* NewsManager.swift in Sources */,
