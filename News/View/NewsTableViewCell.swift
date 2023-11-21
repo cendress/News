@@ -29,7 +29,7 @@ class NewsTableViewCell: UITableViewCell {
     titleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     titleLabel.numberOfLines = 0
     
-    sourceLabel.font = UIFont.preferredFont(forTextStyle: .title1)
+    sourceLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     sourceLabel.textColor = .systemBlue
     sourceLabel.numberOfLines = 1
     

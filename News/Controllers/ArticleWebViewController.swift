@@ -23,6 +23,8 @@ class ArticleWebViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    self.navigationController?.navigationBar.tintColor = .systemGray
+    
     loadWebView()
   }
   
