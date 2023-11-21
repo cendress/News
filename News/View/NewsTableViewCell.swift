@@ -29,12 +29,12 @@ class NewsTableViewCell: UITableViewCell {
     titleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     titleLabel.numberOfLines = 0
     
-    sourceLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    sourceLabel.font = UIFont.preferredFont(forTextStyle: .title1)
     sourceLabel.textColor = .systemBlue
     sourceLabel.numberOfLines = 1
     
     dateLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
-    dateLabel.textColor = .gray
+    dateLabel.textColor = .systemGray
     dateLabel.numberOfLines = 1
     
     newsImageView.contentMode = .scaleAspectFill
@@ -117,7 +117,20 @@ class NewsTableViewCell: UITableViewCell {
   }
   
   private func formatDateString(_ dateString: String) -> String {
-    return ""
+    let inputFormatter = DateFormatter()
+    inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+    inputFormatter.locale = Locale(identifier: "en_US_POSIX")
+    inputFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+    
+    let outputFormatter = DateFormatter()
+    outputFormatter.dateStyle = .medium
+    outputFormatter.timeStyle = .short
+    
+    if let date = inputFormatter.date(from: dateString) {
+      return outputFormatter.string(from: date)
+    } else {
+      return "Date unavailable"
+    }
   }
 }
 
