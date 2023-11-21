@@ -11,6 +11,7 @@ class NewsTableViewCell: UITableViewCell {
   
   let titleLabel = UILabel()
   let sourceLabel = UILabel()
+  let dateLabel = UILabel()
   let newsImageView = UIImageView()
   let activityIndicator = UIActivityIndicatorView(style: .medium)
   
@@ -28,9 +29,13 @@ class NewsTableViewCell: UITableViewCell {
     titleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     titleLabel.numberOfLines = 0
     
-    sourceLabel.font = UIFont.preferredFont(forTextStyle: .title1)
+    sourceLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
     sourceLabel.textColor = .systemBlue
     sourceLabel.numberOfLines = 1
+    
+    dateLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    dateLabel.textColor = .gray
+    dateLabel.numberOfLines = 1
     
     newsImageView.contentMode = .scaleAspectFill
     newsImageView.clipsToBounds = true
@@ -42,6 +47,7 @@ class NewsTableViewCell: UITableViewCell {
     
     contentView.addSubview(titleLabel)
     contentView.addSubview(sourceLabel)
+    contentView.addSubview(dateLabel)
     contentView.addSubview(newsImageView)
     newsImageView.addSubview(activityIndicator)
   }
@@ -49,6 +55,7 @@ class NewsTableViewCell: UITableViewCell {
   private func layoutCell() {
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     sourceLabel.translatesAutoresizingMaskIntoConstraints = false
+    dateLabel.translatesAutoresizingMaskIntoConstraints = false
     newsImageView.translatesAutoresizingMaskIntoConstraints = false
     activityIndicator.translatesAutoresizingMaskIntoConstraints = false
     
@@ -65,7 +72,11 @@ class NewsTableViewCell: UITableViewCell {
       titleLabel.topAnchor.constraint(equalTo: sourceLabel.bottomAnchor, constant: 5),
       titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
       titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-      titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+      
+      dateLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
+      dateLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+      dateLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+      dateLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
       
       activityIndicator.centerXAnchor.constraint(equalTo: newsImageView.centerXAnchor),
       activityIndicator.centerYAnchor.constraint(equalTo: newsImageView.centerYAnchor)
@@ -75,8 +86,8 @@ class NewsTableViewCell: UITableViewCell {
   func configure(with article: Article) {
     titleLabel.text = article.title
     let blueDot = "● "
-    sourceLabel.attributedText = NSAttributedString(string: blueDot + (article.source.name), attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemBlue])
-    
+    sourceLabel.attributedText = NSAttributedString(string: blueDot + article.source.name, attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemBlue])
+    dateLabel.text = formatDateString(article.publishedAt)
     loadImage(from: article.urlToImage)
   }
   
@@ -103,6 +114,10 @@ class NewsTableViewCell: UITableViewCell {
         }
       }
     }.resume()
+  }
+  
+  private func formatDateString(_ dateString: String) -> String {
+    return ""
   }
 }
 
