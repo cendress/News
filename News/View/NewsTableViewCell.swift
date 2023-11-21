@@ -10,6 +10,7 @@ import UIKit
 class NewsTableViewCell: UITableViewCell {
   
   let titleLabel = UILabel()
+  let sourceLabel = UILabel()
   let newsImageView = UIImageView()
   let activityIndicator = UIActivityIndicatorView(style: .medium)
   
@@ -27,6 +28,10 @@ class NewsTableViewCell: UITableViewCell {
     titleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     titleLabel.numberOfLines = 0
     
+    sourceLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    sourceLabel.textColor = .systemCyan
+    sourceLabel.numberOfLines = 1
+    
     newsImageView.contentMode = .scaleAspectFill
     newsImageView.clipsToBounds = true
     newsImageView.layer.cornerRadius = 8
@@ -36,12 +41,14 @@ class NewsTableViewCell: UITableViewCell {
     activityIndicator.hidesWhenStopped = true
     
     contentView.addSubview(titleLabel)
+    contentView.addSubview(sourceLabel)
     contentView.addSubview(newsImageView)
     newsImageView.addSubview(activityIndicator)
   }
   
   private func layoutCell() {
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    sourceLabel.translatesAutoresizingMaskIntoConstraints = false
     newsImageView.translatesAutoresizingMaskIntoConstraints = false
     activityIndicator.translatesAutoresizingMaskIntoConstraints = false
     
@@ -51,7 +58,11 @@ class NewsTableViewCell: UITableViewCell {
       newsImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
       newsImageView.heightAnchor.constraint(equalToConstant: 200),
       
-      titleLabel.topAnchor.constraint(equalTo: newsImageView.bottomAnchor, constant: 10),
+      sourceLabel.topAnchor.constraint(equalTo: newsImageView.bottomAnchor, constant: 10),
+      sourceLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+      sourceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+      
+      titleLabel.topAnchor.constraint(equalTo: sourceLabel.bottomAnchor, constant: 5),
       titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
       titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
       titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
@@ -63,6 +74,9 @@ class NewsTableViewCell: UITableViewCell {
   
   func configure(with article: Article) {
     titleLabel.text = article.title
+    let blueDot = "● "
+    sourceLabel.attributedText = NSAttributedString(string: blueDot + (article.source.name), attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemCyan])
+    
     loadImage(from: article.urlToImage)
   }
   
