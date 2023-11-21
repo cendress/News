@@ -28,8 +28,8 @@ class NewsTableViewCell: UITableViewCell {
     titleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     titleLabel.numberOfLines = 0
     
-    sourceLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
-    sourceLabel.textColor = .systemCyan
+    sourceLabel.font = UIFont.preferredFont(forTextStyle: .title1)
+    sourceLabel.textColor = .systemBlue
     sourceLabel.numberOfLines = 1
     
     newsImageView.contentMode = .scaleAspectFill
@@ -75,7 +75,7 @@ class NewsTableViewCell: UITableViewCell {
   func configure(with article: Article) {
     titleLabel.text = article.title
     let blueDot = "● "
-    sourceLabel.attributedText = NSAttributedString(string: blueDot + (article.source.name), attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemCyan])
+    sourceLabel.attributedText = NSAttributedString(string: blueDot + (article.source.name), attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemBlue])
     
     loadImage(from: article.urlToImage)
   }
